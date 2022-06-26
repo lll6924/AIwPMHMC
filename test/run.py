@@ -7,15 +7,9 @@ from numpyro.infer.hmc_util import dual_averaging, welford_covariance, build_ada
 import math
 from numpyro.diagnostics import print_summary, effective_sample_size
 import click
-from algorithm import PMHMC, VIP, PMHMCH
 import importlib
 import time
-from numpyro.handlers import seed
 import os
-import seaborn as sns
-from matplotlib import pyplot as plt
-import pandas as pd
-import numpyro
 
 def logmeanexp(x):
     m = jnp.max(x)
@@ -159,7 +153,9 @@ class HMC:
             ratio = 0.
         self.key, sample_key = random.split(self.key)
         rand_val = random.uniform(sample_key)
-
+        if rand_val > ratio:
+            theta = theta_last
+            z = z_last
         return theta,z,rand_val > ratio, ratio
 
     @property
@@ -207,7 +203,7 @@ def main(warmup_steps,sample_steps,rng_key,integrator,j, rho,trajectory_length,i
     ))
     if not os.path.exists(result_path):
         os.mkdir(result_path)
-    result_file = os.path.join(result_path,'result')
+    result_file = os.path.join(result_path,'result2')
     #jax.profiler.start_trace(os.path.join(result_path,'tensorboard'))
 
     hmc_key, algo_key, postprocess_key = random.split(random.PRNGKey(rng_key),3)

@@ -3,7 +3,6 @@ import jax.random as random
 from jax import vmap
 import numpy as np
 import numpyro.distributions as dist
-from numpyro.infer import MCMC, NUTS, HMC
 from numpyro.infer.hmc import initialize_model, init_to_uniform
 from approximator import DeepVariationalInference, VariationallyInferredParameterization, VariationalInference, VIVIP
 from utils.extensions import log_mean_exp

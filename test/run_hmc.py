@@ -136,7 +136,7 @@ def main(warmup_steps,sample_steps,rng_key,j, rho,trajectory_length,init_epsilon
     hmc_key, algo_key, postprocess_key = random.split(random.PRNGKey(rng_key), 3)
     algo_module = importlib.import_module('algorithm')
     algo = getattr(algo_module, algorithm)
-    print(algorithm)
+    print(algorithm,algo)
     if algorithm!='PMHMC2' and algorithm!='PMHMCH2':
         algor = algo(model.model, algo_key, *model.args(),
                      vi_steps=training_steps, vi_step_size=training_lr, model_class = model, **model.kwargs())
