@@ -4,8 +4,6 @@ from numpyro.infer.reparam import TransformReparam
 import jax.numpy as jnp
 import jax.scipy as jsc
 from jax import vmap
-from utils import GaussHermiteQuadrature
-
 class EightSchools:
     J = 8
     y = jnp.array([[28.0], [8.0], [-3.0], [7.0], [-1.0], [1.0], [18.0], [12.0]])

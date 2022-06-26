@@ -4,7 +4,7 @@ from jax import vmap
 import numpy as np
 import numpyro.distributions as dist
 from numpyro.infer.hmc import initialize_model, init_to_uniform
-from approximator import GaussianVariationalInference, Laplacian, DeepVariationalInference, DeepVariationalInferenceFlow, DeepVariationalInferencePrior, TMP, Prior, VariationallyInferredParameterization, VariationalInference, VIVIP, VariationalInferenceHierarchical
+from approximator import DeepVariationalInference, VariationallyInferredParameterization, VariationalInference, VIVIP, VariationalInferenceHierarchical
 from utils.extensions import log_mean_exp
 from jax.scipy.special import logsumexp
 import sys
