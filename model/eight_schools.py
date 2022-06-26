@@ -6,7 +6,7 @@ import jax.scipy as jsc
 from jax import vmap
 class EightSchools:
     J = 8
-    y = jnp.array([[28.0], [8.0], [-3.0], [7.0], [-1.0], [1.0], [18.0], [12.0]])
+    y = jnp.array([28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0])
     sigma = jnp.array([15.0, 10.0, 16.0, 11.0, 9.0, 11.0, 10.0, 18.0])
     lamb_0 = 10.
     # Eight Schools example

@@ -10,6 +10,7 @@ class GammaFunnel:
 
     def set_lambda(self, lamb):
         pass
+
     def args(self):
         return ()
 
