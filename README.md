@@ -1,6 +1,6 @@
 # Automatic Inference with Pseudo-Marginal Hamiltonian Monte Carlo
 
-Accepted to ICML workshop, Beyond Bayes: Paths Towards Universal Reasoning Systems. The codes are under update. 
+Accepted to ICML workshop, Beyond Bayes: Paths Towards Universal Reasoning Systems.
 
 ## Model Definition
 
@@ -62,4 +62,21 @@ The algorithms are also controlled by the following attributes:
 
 ## Hierarchical Models;
 
-Updating now...
+For hierarchical models, we assume $p(\theta)$ and $p(x_i,y_i|\theta)$ are provided. See `model/hierarchical_synthesized.py` as an example. To run PM-HMC for it, use
+
+``
+python -m test.run_hmc --algorithm PMHMCH2 --model HierarchicalSynthesized --approximator VariationalInferenceHierarchical --training_steps 100000
+``
+
+## Using NumPyro's HMC
+
+It is also possible to use NumPyro's built-in HMC like NUTS to run PM-HMC. Once the negative potential are obtained from the potentials, we can use codes like below to run with NumPyro's NUTS.
+
+```
+from numpyro.infer import MCMC, NUTS
+
+nuts_kernel = NUTS(potential_fn=neg_log_prob)
+mcmc = MCMC(nuts_kernel, num_warmup=num_warmup, num_samples=num_samples, )
+self.rng_key, run_key = random.split(self.rng_key)
+mcmc.run(run_key, extra_fields=('potential_energy',),init_params=jnp.zeros(n_theta + n_x * samples))
+```

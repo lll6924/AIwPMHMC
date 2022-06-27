@@ -14,8 +14,6 @@ from jax import jit
 class PMHMCH2:
     def __init__(self,
                  model,
-                 prior,
-                 conditional,
                  rng_key,
                  *args,
                  num_sample = 20,
@@ -38,8 +36,6 @@ class PMHMCH2:
         :param kwargs: The (key = word) arguments of the model
         """
         self.model = model
-        self.prior = prior
-        self.conditional = conditional
         self.approximate_strategy = approximate_strategy
         self.num_sample = num_sample
         self.rng_key, init_key = random.split(rng_key)
@@ -186,7 +182,7 @@ class PMHMCH2:
 
             def single_z_logpdf(xs, ys, logqs):
                 def single_sample_logpdf(x, y):
-                    return self.conditional(z1, x, y)
+                    return self.model_class.conditional(z1, x, y)
 
                 logps = vmap(single_sample_logpdf)(xs, ys)
                 return log_mean_exp(logps - logqs)
@@ -205,7 +201,7 @@ class PMHMCH2:
 
                 def single_z_logpdf(xs, ys, logqs):
                     def single_sample_logpdf(x, y):
-                        return self.conditional(theta, x, y)
+                        return self.model_class.conditional(theta, x, y)
 
                     logps = vmap(single_sample_logpdf)(xs, ys)
                     return logps - logqs

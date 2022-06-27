@@ -14,8 +14,6 @@ from jax import jit
 class PMHMCH:
     def __init__(self,
                  model,
-                 prior,
-                 conditional,
                  rng_key,
                  *args,
                  num_sample = 20,
@@ -38,8 +36,6 @@ class PMHMCH:
         :param kwargs: The (key = word) arguments of the model
         """
         self.model = model
-        self.prior = prior
-        self.conditional = conditional
         self.approximate_strategy = approximate_strategy
         self.num_sample = num_sample
         self.rng_key, init_key = random.split(rng_key)
