@@ -36,15 +36,13 @@ class VariationallyInferredParameterization(Approximator):
         seeds, state_seed = random.split(rng_key)
         init_loc = jnp.zeros(all_dim)
         init_scale = jnp.ones(all_dim)
-        init_lambda = kwargs['lamb'][0]
-        lambda_n = len(kwargs['lamb'])
+        init_lambda = kwargs['lamb']
         init_state = SVIState(optimizer.init((init_loc, init_scale, init_lambda)), None, state_seed)
         #print(init_state)
         def update(svi_state, optimizer, *args, **kwargs):
             rng_key, rng_key_step = random.split(svi_state.rng_key)
             def loss_fn(params):
                 loc, scale, lamb = params
-                lamb = jnp.full(lambda_n,lamb)
                 z_base_dist = dist.Normal(loc, scale)
                 z = numpyro.sample('z_base',z_base_dist, rng_key=rng_key_step)
                 logq = jnp.sum(z_base_dist.log_prob(z))
@@ -83,6 +81,6 @@ class VariationallyInferredParameterization(Approximator):
         loc, scale, lamb = optimizer.get_params(state.optim_state)
         self.loc = loc
         self.scale = scale
-        self.lamb = jnp.full(lambda_n,lamb)
+        self.lamb = lamb
         print(lamb)
         return self.lamb
